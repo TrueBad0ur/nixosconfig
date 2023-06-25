@@ -10,6 +10,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      #./i3status.nix
       #./neofetch-configuration.nix
     ];
 
@@ -71,9 +72,14 @@
     displayManager.defaultSession = "none+i3";
     windowManager.i3 = {
       enable = true;
+      #extraPackages = with pkgs; [
+      #  dmenu i3status i3lock i3blocks
+      #];
       extraPackages = with pkgs; [
-        dmenu i3status i3lock i3blocks
+        dmenu i3lock i3status
       ];
+      configFile = "/etc/nixos/i3.conf";
+      #extraSessionCommands = "cp /etc/nixos/i3status.conf /home/kick/.config/i3status/config";
     };
   };
 
@@ -96,7 +102,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget curl neofetch zsh oh-my-zsh alacritty docker firefox git tdesktop htop tmux file feh
+    wget curl neofetch zsh oh-my-zsh alacritty docker firefox git tdesktop htop tmux file feh xclip
   ];
 
   environment.shells = with pkgs; [ zsh ];
