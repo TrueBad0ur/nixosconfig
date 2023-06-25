@@ -49,6 +49,9 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  # docker config
+  virtualisation.docker.enable = true;
+
   # Configurration for plasma
   #services.xserver = {
   #  layout = "us";
@@ -69,7 +72,9 @@
     xkbVariant = "";
     enable = true;
     desktopManager.xterm.enable = false;
+    
     displayManager.defaultSession = "none+i3";
+    #displayManager.sessionCommands = "cp /etc/nixos/background.png ~/.background-image";
     windowManager.i3 = {
       enable = true;
       #extraPackages = with pkgs; [
@@ -79,7 +84,6 @@
         dmenu i3lock i3status
       ];
       configFile = "/etc/nixos/i3.conf";
-      #extraSessionCommands = "cp /etc/nixos/i3status.conf /home/kick/.config/i3status/config";
     };
   };
 
@@ -91,7 +95,7 @@
     isNormalUser = true;
     description = "truebad0ur";
     #shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [];
   };
 
@@ -102,9 +106,20 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget curl neofetch zsh oh-my-zsh alacritty docker firefox git tdesktop htop tmux file feh xclip
-  ];
+    wget curl
+    neofetch zsh oh-my-zsh alacritty 
+    docker firefox git tdesktop htop tmux file feh xclip
+    minikube kubernetes-helm jq
+  ]; # kube3d kubectl
 
+  #services.kubernetes = {
+  #  roles = [ "master" "node" ];
+  #};
+
+  #services.k3s = {
+  #  enable = true;
+  #  serverAddr = "https://0.0.0.0:6443";
+  #};
   environment.shells = with pkgs; [ zsh ];
   environment.variables = {
     TERMINAL = "alacritty";
@@ -124,6 +139,8 @@
     shellAliases = {
       ls = "ls -lah --color";
       rebuild = "sudo nixos-rebuild switch";
+      copy = "sudo cp -r /etc/nixos/* /home/truebad0ur/nixosconfig/curr_config && chown -R truebad0ur:users /home/truebad0ur/nixosconfig/curr_config/";
+      k = "minikube kubectl";
     };
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
