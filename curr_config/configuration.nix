@@ -134,6 +134,11 @@
     TERMINAL = "alacritty";
   };
 
+  # ssh client
+  programs.ssh = {
+    askPassword = "";
+  };
+
   # zsh config
   programs.zsh = {
     promptInit = ''
