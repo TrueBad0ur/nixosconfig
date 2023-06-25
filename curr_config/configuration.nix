@@ -119,6 +119,7 @@
     neofetch zsh oh-my-zsh alacritty 
     docker firefox git tdesktop htop tmux file feh xclip
     minikube kubernetes-helm jq
+    libcap go gcc
   ]; # kube3d kubectl
 
   #services.kubernetes = {
