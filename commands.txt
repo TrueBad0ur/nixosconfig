@@ -1,2 +1,2 @@
 nix-env --list-generations --profile /nix/var/nix/profiles/system
-nix-env --list-generations --profile /nix/var/nix/profiles/system
+sudo nix-env --delete-generations --profile /nix/var/nix/profiles/system X Y Z

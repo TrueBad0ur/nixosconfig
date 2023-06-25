@@ -10,6 +10,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      #./trackpoint.nix
       #./i3status.nix
       #./neofetch-configuration.nix
     ];
@@ -68,13 +69,21 @@
 
   # Configuration for i3
   services.xserver = {
+    #libinput = {
+    #  enable = true;
+      
+    #};
+    exportConfiguration = true;
     layout = "us";
     xkbVariant = "";
     enable = true;
     desktopManager.xterm.enable = false;
     
     displayManager.defaultSession = "none+i3";
-    #displayManager.sessionCommands = "cp /etc/nixos/background.png ~/.background-image";
+    #displayManager.sessionCommands = [
+    #  "xinput set-prop 11 'libinput Scroll Method Enabled' 0, 0, 1"
+    #  "xinput set-prop 11 'libinput Button Scrolling Button' 2"
+    #];
     windowManager.i3 = {
       enable = true;
       #extraPackages = with pkgs; [
@@ -139,8 +148,9 @@
     shellAliases = {
       ls = "ls -lah --color";
       rebuild = "sudo nixos-rebuild switch";
-      copy = "sudo cp -r /etc/nixos/* /home/truebad0ur/nixosconfig/curr_config && chown -R truebad0ur:users /home/truebad0ur/nixosconfig/curr_config/";
+      copy = "sudo cp -r /etc/nixos/* /home/truebad0ur/nixosconfig/curr_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/curr_config/";      
       k = "minikube kubectl";
+      list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
     };
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
