@@ -2,24 +2,17 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-# Obviously gonna use home manager later
-
 { config, pkgs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      #./trackpoint.nix
-      #./i3status.nix
-      #./neofetch-configuration.nix
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -30,7 +23,6 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  # nmtui - network manager after installation
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -50,45 +42,21 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # docker config
   virtualisation.docker.enable = true;
 
-  # Configurration for plasma
-  #services.xserver = {
-  #  layout = "us";
-  #  xkbVariant = "";
-  #  enable = true;
-  #  displayManager.sddm.enable = true;
-  #  desktopManager.plasma5 = {
-  #    enable = true;
-  #    excludePackages = with pkgs.plasma5Packages; [
-  #      elisa gwenview okular oxygen khelpcenter plasma-browser-integration print-manager
-  #    ];
-  #  };
-  #};
-
-  # Configuration for i3
+  # Configure keymap in X11
   services.xserver = {
-    #libinput = {
-    #  enable = true;
-      
-    #};
+    enable = true;
     exportConfiguration = true;
     layout = "us";
     xkbVariant = "";
-    enable = true;
+    libinput.touchpad.naturalScrolling = true;
+
     desktopManager.xterm.enable = false;
-    
+    displayManager.lightdm.enable = true;
     displayManager.defaultSession = "none+i3";
-    #displayManager.sessionCommands = [
-    #  "xinput set-prop 11 'libinput Scroll Method Enabled' 0, 0, 1"
-    #  "xinput set-prop 11 'libinput Button Scrolling Button' 2"
-    #];
     windowManager.i3 = {
       enable = true;
-      #extraPackages = with pkgs; [
-      #  dmenu i3status i3lock i3blocks
-      #];
       extraPackages = with pkgs; [
         dmenu i3lock i3status
       ];
@@ -96,17 +64,19 @@
     };
   };
 
-  # config for all users
   users.defaultUserShell = pkgs.zsh;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.truebad0ur = {
     isNormalUser = true;
     description = "truebad0ur";
-    #shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [];
   };
+
+  #fonts.fonts = with pkgs; [
+  #  (nerdfonts.override { fonts = [ "MesloLGS NF Bold" "MesloLGS NF Bold Italic" "MesloLGS NF Italic" "MesloLGS NF Regular" ]; })
+  #];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -114,28 +84,18 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget curl
-    neofetch zsh oh-my-zsh alacritty 
+    neofetch zsh oh-my-zsh alacritty
     docker firefox git tdesktop htop tmux file feh xclip
-    minikube kubernetes-helm jq
+    minikube kubernetes-helm jq kubectl
     libcap go gcc
   ]; # kube3d kubectl
 
-  #services.kubernetes = {
-  #  roles = [ "master" "node" ];
-  #};
-
-  #services.k3s = {
-  #  enable = true;
-  #  serverAddr = "https://0.0.0.0:6443";
-  #};
   environment.shells = with pkgs; [ zsh ];
   environment.variables = {
     TERMINAL = "alacritty";
   };
 
-  # ssh client
   programs.ssh = {
     askPassword = "";
   };
@@ -143,9 +103,12 @@
   # zsh config
   programs.zsh = {
     promptInit = ''
-      #cp /etc/nixos/neofetch.conf /home/truebad0ur/.config/neofetch/config.conf
-      cp /etc/nixos/neofetch.conf /home/truebad0ur/.config/neofetch/config.conf
-
+      # git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+      # echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+      # cp /etc/nixos/neofetch.conf /home/truebad0ur/.config/neofetch/config.conf
+      ## cp -r ./fonts $XDG_DATA_HOME/fonts
+      # cp -r /etc/nixos/fonts /home/truebad0ur/.local/share/
+      # chown -R truebad0ur:users /home/truebad0ur/.local/share/fonts/
       # autoload -U promptinit && promptinit
       neofetch
       # PROMPT='%n@%m%#>>>>'
@@ -170,38 +133,5 @@
     };
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
-  #system.activationScripts = {
-  #  rfkillUnblockWlan = {
-  #    text = ''
-  #    rfkill unblock wlan
-  #    '';
-  #    deps = [];
-  #  };
-  #};
+  system.stateVersion = "23.05";
 }
