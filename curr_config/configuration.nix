@@ -29,6 +29,9 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  #console.font = "cyr-sun16";
+  #console.keyMap = "ruwin_cplk-UTF-8";
+  #i18n.defaultLocale = "C.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
@@ -48,10 +51,18 @@
   services.xserver = {
     enable = true;
     exportConfiguration = true;
+<<<<<<< HEAD
     layout = "us";
     xkbVariant = "";
     libinput.touchpad.naturalScrolling = true;
 
+=======
+    #xkbModel = "microsoft";
+    layout = "us,ru";
+    #xkbOptions = "ctrl:nocaps,lv3:ralt_switch_multikey,misc:typo,grp:rctrl_switch";
+    #xkbVariant = "winkeys";
+    enable = true;
+>>>>>>> 7b4a14d (try lang)
     desktopManager.xterm.enable = false;
     displayManager.lightdm.enable = true;
     displayManager.defaultSession = "none+i3";
@@ -85,7 +96,11 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     wget curl
+<<<<<<< HEAD
     neofetch zsh oh-my-zsh alacritty
+=======
+    neofetch zsh oh-my-zsh alacritty vim
+>>>>>>> 7b4a14d (try lang)
     docker firefox git tdesktop htop tmux file feh xclip
     minikube kubernetes-helm jq kubectl
     libcap go gcc
