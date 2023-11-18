@@ -56,6 +56,17 @@
   # docker config
   virtualisation.docker.enable = true;
 
+  # autostart pulseaudio server
+
+  #systemd.user.services.pulseaudioautostart = {
+  #  description = "Start pulse audio server";
+  #  serviceConfig.PassEnvironment = "DISPLAY";
+  #  script = ''
+  #    #pulseaudio --start
+  #  '';
+  #wantedBy = [ "multi-user.target" ]; # starts after login
+  #};
+
   # Configurration for plasma
   #services.xserver = {
   #  layout = "us";
