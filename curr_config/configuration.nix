@@ -140,6 +140,8 @@
     libcap go gcc
   ]; # kube3d kubectl
 
+  environment.localBinInPath = true;
+
   #services.kubernetes = {
   #  roles = [ "master" "node" ];
   #};
