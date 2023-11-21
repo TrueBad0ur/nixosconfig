@@ -36,8 +36,9 @@
   time.timeZone = "Europe/Moscow";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  #i18n.defaultLocale = "en_US.UTF-8";
   #console.font = "cyr-sun16";
+  console.keyMap = "us";
   #console.keyMap = "ruwin_cplk-UTF-8";
   #i18n.defaultLocale = "C.UTF-8";
 
@@ -91,7 +92,8 @@
     #xkbModel = "microsoft";
     layout = "us,ru";
     #xkbOptions = "ctrl:nocaps,lv3:ralt_switch_multikey,misc:typo,grp:rctrl_switch";
-    #xkbVariant = "winkeys";
+    xkbOptions = "grp:rctrl_switch";
+    #xkbVariant = "workman,";
     enable = true;
     desktopManager.xterm.enable = false;
     
