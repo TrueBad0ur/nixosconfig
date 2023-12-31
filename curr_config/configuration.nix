@@ -4,12 +4,13 @@
 
 # Obviously gonna use home manager later
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, qtgraphicaleffects, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      #./tuigreet.nix
       #./trackpoint.nix
       #./i3status.nix
       #./neofetch-configuration.nix
@@ -88,16 +89,26 @@
     #  enable = true;
       
     #};
+    # tty = 7;
     exportConfiguration = true;
     #xkbModel = "microsoft";
     layout = "us,ru";
     #xkbOptions = "ctrl:nocaps,lv3:ralt_switch_multikey,misc:typo,grp:rctrl_switch";
     xkbOptions = "grp:rctrl_switch";
     #xkbVariant = "workman,";
+    
     enable = true;
     desktopManager.xterm.enable = false;
     
+    #displayManager.startx.enable = true;
     displayManager.defaultSession = "none+i3";
+    displayManager.lightdm = {
+      enable = true;
+      #theme = "sugar-dark";
+    };
+
+    #displayManager.lightdm.enable = false;
+    #displayManager.gdm.enable = false;
     #displayManager.sessionCommands = [
     #  "xinput set-prop 11 'libinput Scroll Method Enabled' 0, 0, 1"
     #  "xinput set-prop 11 'libinput Button Scrolling Button' 2"
@@ -108,7 +119,7 @@
       #  dmenu i3status i3lock i3blocks
       #];
       extraPackages = with pkgs; [
-        dmenu i3lock i3status
+        dmenu i3lock i3status # xorg.xinit
       ];
       configFile = "/etc/nixos/i3.conf";
     };
@@ -132,11 +143,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget curl musikcube
     neofetch zsh oh-my-zsh alacritty vim
     docker firefox git tdesktop htop tmux file feh xclip
-    minikube kubernetes-helm jq
+    minikube kubernetes-helm terraform wireguard-tools jq
     libcap go gcc
   ]; # kube3d kubectl
 
@@ -168,14 +179,17 @@
 
       # autoload -U promptinit && promptinit
       neofetch
+      [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
       # PROMPT='%n@%m%#>>>>'
     '';
     enable = true;
     shellAliases = {
-      ls = "ls -lah --color";
+      ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";
-      copy = "sudo cp -r /etc/nixos/* /home/truebad0ur/nixosconfig/curr_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/curr_config/";      
-      k = "minikube kubectl";
+      copy = "sudo cp -r /etc/nixos/\* /home/truebad0ur/nixosconfig/curr_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/curr_config/";
+      k = "kubectl";
+      startminikube = "minikube start --nodes 1 -p mycluster";
+      deleteminikube = "minikube delete --profile mycluster";
       list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
     };
     autosuggestions.enable = true;
