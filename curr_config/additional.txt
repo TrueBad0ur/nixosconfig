@@ -5,3 +5,8 @@ Navigate to "General" (it should open to "General" by default).
 Scroll down to "Browsing".  Under "Browsing", you will find the "Use autoscrolling" option. Put a check mark beside this to activate this functionality in Firefox.
 Or just search for "autoscrolling" using the search bar.
 Firefox Preferences tab with autoscrolling highlighted
+
+[ Add keystone-auth ]
+
+Original package is somehow broken
+so: curl -sSL https://hub.mcs.mail.ru/repository/client-keystone-auth/latest/linux/client-install.sh | bash
