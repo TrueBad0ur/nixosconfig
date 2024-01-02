@@ -191,6 +191,8 @@
       startminikube = "minikube start --nodes 1 -p mycluster";
       deleteminikube = "minikube delete --profile mycluster";
       list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
+      vpnstart = "wg-quick up ~/.config/thinkpadx200s.conf";
+      vpnstop = "wg-quick down ~/.config/thinkpadx200s.conf";
     };
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
