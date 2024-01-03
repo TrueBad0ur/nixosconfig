@@ -150,7 +150,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget curl musikcube unzip dig
+    wget curl musikcube unzip dig vscode
     neofetch zsh oh-my-zsh alacritty vim
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
@@ -199,8 +199,8 @@
       startminikube = "minikube start --nodes 1 -p mycluster";
       deleteminikube = "minikube delete --profile mycluster";
       list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
-      vpnstart = "wg-quick up ~/.config/thinkpadx200s.conf";
-      vpnstop = "wg-quick down ~/.config/thinkpadx200s.conf";
+      vpnstart = "wg-quick up ~/.config/andrey.conf";
+      vpnstop = "wg-quick down ~/.config/andrey.conf";
     };
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
