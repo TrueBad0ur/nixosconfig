@@ -26,6 +26,10 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    extraHosts =
+      ''
+        127.0.0.1 test.local
+      '';
     #nameservers = [ "104.248.36.8" ];
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   };
