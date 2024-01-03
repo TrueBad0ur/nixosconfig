@@ -21,16 +21,19 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # networking
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+    #nameservers = [ "104.248.36.8" ];
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  };
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-  # nmtui - network manager after installation
+  environment.etc = {
+    "resolv.conf".text = "nameserver 104.248.36.8\n";
+  };
+  
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -143,7 +146,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget curl musikcube unzip
+    wget curl musikcube unzip dig
     neofetch zsh oh-my-zsh alacritty vim
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
