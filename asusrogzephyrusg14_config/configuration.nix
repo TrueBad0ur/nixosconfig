@@ -148,6 +148,7 @@
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
+    cinnamon.nemo
   ]; # kube3d kubectl
 
   environment.localBinInPath = true;
