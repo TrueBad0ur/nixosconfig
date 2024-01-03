@@ -155,7 +155,7 @@
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
-    cinnamon.nemo
+    cinnamon.nemo shutter
     #rogauracore
   ]; # kube3d kubectl
 

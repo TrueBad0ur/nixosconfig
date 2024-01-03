@@ -19,9 +19,3 @@ nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 nix-channel --update
 
 nix-channel --remove nixos
-
-[ Build ]
-
-nix-build -K -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
-
-nix-env -i -f default.nix
