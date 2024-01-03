@@ -156,6 +156,7 @@
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
     cinnamon.nemo
+    #rogauracore
   ]; # kube3d kubectl
 
   environment.localBinInPath = true;
@@ -191,6 +192,13 @@
       # PROMPT='%n@%m%#>>>>'
     '';
     enable = true;
+    shellInit = ''
+      delete-generations() {
+        inputGenerationsArray=$(seq $1 $2)
+        sudo nix-env --delete-generations $inputGenerationsArray --profile /nix/var/nix/profiles/system
+      }
+
+    '';
     shellAliases = {
       ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";

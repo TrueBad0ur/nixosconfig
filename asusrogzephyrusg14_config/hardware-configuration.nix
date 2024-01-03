@@ -43,4 +43,9 @@
   hardware.pulseaudio.support32Bit = true;
 
   hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+
+  #environment.systemPackages = with pkgs; [
+  #  libusb1
+  #];
+
 }
