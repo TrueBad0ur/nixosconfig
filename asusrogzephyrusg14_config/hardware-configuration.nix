@@ -36,4 +36,11 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # sound
+
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+
+  hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
 }

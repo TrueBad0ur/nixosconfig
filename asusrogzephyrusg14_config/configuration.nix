@@ -147,7 +147,7 @@
     neofetch zsh oh-my-zsh alacritty vim
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubernetes-helm terraform wireguard-tools jq
-    libcap go gcc
+    libcap go gcc ffmpeg-full
   ]; # kube3d kubectl
 
   environment.localBinInPath = true;
