@@ -4,7 +4,7 @@
 
 # Obviously gonna use home manager later
 
-{ config, pkgs, lib, qtgraphicaleffects, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -205,6 +205,17 @@
         "sudo"
       ];
     };
+  };
+
+  # screen brightness
+
+  programs.light.enable = true;
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
+      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+    ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
