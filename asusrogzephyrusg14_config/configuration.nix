@@ -146,7 +146,7 @@
     wget curl musikcube unzip
     neofetch zsh oh-my-zsh alacritty vim
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
-    minikube kubernetes-helm terraform wireguard-tools jq
+    minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
     cinnamon.nemo
   ]; # kube3d kubectl
