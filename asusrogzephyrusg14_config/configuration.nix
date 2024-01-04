@@ -115,6 +115,18 @@
     wantedBy = [ "multi-user.target" ]; # starts after login
   };
 
+  #systemd.services.rogauracore = {
+  #  enable = true;
+  #  serviceConfig = {
+  #    Restart = "on-failure";
+  #    RestartSec = "3";
+  #  };
+  #  script = ''
+  #    /home/truebad0ur/.nix-profile/bin/rogauracore brightness 3
+  #  '';
+  #  wantedBy = [ "multi-user.target" ]; # starts after login
+  #};
+
   # autostart pulseaudio server
 
   #systemd.user.services.pulseaudioautostart = {
@@ -206,7 +218,7 @@
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
-    cinnamon.nemo shutter xscreensaver
+    cinnamon.nemo shutter xscreensaver #rogauracore
     #rogauracore
   ]; # kube3d kubectl
 
@@ -253,6 +265,7 @@
     shellAliases = {
       ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";
+      customrebuild = "sudo nixos-rebuild -I nixpkgs=/home/truebad0ur/nixpkgs switch";
       copy = "sudo cp -r /etc/nixos/\* /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/";
       k = "kubectl";
       startminikube = "minikube start --nodes 1 -p mycluster";
@@ -281,6 +294,11 @@
     bindings = [
       { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
       { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
+      
+      #{ keys = [ 229 ]; events = [ "key" ]; command = "sudo /home/truebad0ur/.nix-profile/bin/rogauracore brightness 1"; }
+      #{ keys = [ 230 ]; events = [ "key" ]; command = "sudo /home/truebad0ur/.nix-profile/bin/rogauracore brightness 3"; }
+      #{ keys = [ 229 ]; events = [ "key" ]; command = "echo 1 > /tmp/229"; }
+      #{ keys = [ 230 ]; events = [ "key" ]; command = "echo 1 > /tmp/230"; }
     ];
   };
 
