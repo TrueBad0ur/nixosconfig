@@ -64,6 +64,57 @@
   # docker config
   virtualisation.docker.enable = true;
 
+ ## redo xscreensaver service from system to user, currently it somehow doesn't work
+#  systemd.user.services.xscreensaverstart = {
+#    description = "Start xscreensaver";
+#    enable = true;
+#    serviceConfig = {
+#      Restart = "always";
+#      RestartSec = "30";
+#    };
+#    path = with pkgs; [ xscreensaver ];
+#    script = ''
+#      xscreensaver --nosplash
+#    '';
+#    #script = ''
+#    #  #xscreensaver --nosplash
+#    #  whoami > /tmp/whoami
+#    #'';
+#    wantedBy = [ "default.target" ]; # starts after login
+#  };
+
+#  systemd.services.xscreensaverstart = {
+#    description = "Start xscreensaver";
+#    enable = true;
+#    serviceConfig = {
+#      Restart = "on-failure";
+#      RestartSec = "3";
+#    };
+#    path = with pkgs; [ xscreensaver ];
+#    script = ''
+#      xscreensaver --nosplash
+#      #whoami >> /tmp/whoami
+#    '';
+#    wantedBy = [ "multi-user.target" ]; # starts after login
+#  };
+
+  systemd.services.xscreensaverstart = {
+    enable = true;
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "3";
+    };
+    #environment = {
+    #  User = "truebad0ur";
+    #  Group = "truebad0ur";
+    #};
+    path = with pkgs; [ xscreensaver sudo ];
+    script = ''
+      sudo -H -u truebad0ur xscreensaver --nosplash
+    '';
+    wantedBy = [ "multi-user.target" ]; # starts after login
+  };
+
   # autostart pulseaudio server
 
   #systemd.user.services.pulseaudioautostart = {
@@ -155,7 +206,7 @@
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
-    cinnamon.nemo shutter
+    cinnamon.nemo shutter xscreensaver
     #rogauracore
   ]; # kube3d kubectl
 
