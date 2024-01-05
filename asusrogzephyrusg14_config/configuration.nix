@@ -284,6 +284,7 @@
 
     '';
     shellAliases = {
+      light = "sudo rogauracore brightness 3";
       ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";
       customrebuild = "sudo nixos-rebuild -I nixpkgs=/home/truebad0ur/nixpkgs switch";
