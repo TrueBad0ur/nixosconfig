@@ -173,10 +173,28 @@
     desktopManager.xterm.enable = false;
     
     #displayManager.startx.enable = true;
-    displayManager.defaultSession = "none+i3";
-    displayManager.lightdm = {
-      enable = true;
-      #theme = "sugar-dark";
+    displayManager = {
+      defaultSession = "none+i3";
+      session = [
+        {
+          manage = "desktop";
+          name = "default";
+          start = ''exec i3 -c /etc/i3/config'';
+        }
+      ];
+      lightdm = {
+        enable = true;
+        greeters = {
+          #pantheon.enable = true;
+          
+          #mini.enable = true;
+          #mini.user = "truebad0ur";
+
+          #enso.enable = true;
+
+          tiny.enable = true;
+        };
+      };
     };
 
     #displayManager.lightdm.enable = false;
