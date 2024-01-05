@@ -26,6 +26,9 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    #wireless.enable = false;
+    wireless.iwd.enable = true;
+    networkmanager.wifi.backend = "iwd";
     extraHosts =
       ''
         127.0.0.1 test.local
