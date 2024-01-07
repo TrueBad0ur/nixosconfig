@@ -240,6 +240,7 @@
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
     cinnamon.nemo shutter xscreensaver #rogauracore
+    rofi
     # All with wine
     wineWowPackages.stable
     (callPackage /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/buildrog/default.nix { })
@@ -259,6 +260,13 @@
   environment.variables = {
     TERMINAL = "alacritty";
   };
+
+  # rofi config
+  # todo in home manager
+  #programs.rofi = {
+  #  enable = true;
+  #  theme = "/home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/rofi/DarkBlue.rasi";
+  #};
 
   # ssh client
   programs.ssh = {
