@@ -233,9 +233,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # All tools
-    emacs wget curl musikcube unzip dig vscode neofetch
-    go zsh oh-my-zsh alacritty
+    emacs # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget curl musikcube unzip dig vscode go
+    neofetch zsh oh-my-zsh alacritty vim
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
     libcap go gcc ffmpeg-full
