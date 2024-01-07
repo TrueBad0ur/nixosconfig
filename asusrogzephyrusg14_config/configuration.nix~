@@ -242,7 +242,7 @@
     cinnamon.nemo shutter xscreensaver #rogauracore
     # All with wine
     wineWowPackages.stable
-    (callPackage /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/buildrog/default.nix { })
+    #(callPackage /home/truebad0ur/buildrog/local/default.nix { })
   ]; # kube3d kubectl
 
   environment.localBinInPath = true;
