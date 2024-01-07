@@ -45,12 +45,10 @@
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
-  # Select internationalisation properties.
-  #i18n.defaultLocale = "en_US.UTF-8";
-  #console.font = "cyr-sun16";
-  console.keyMap = "us";
-  #console.keyMap = "ruwin_cplk-UTF-8";
-  #i18n.defaultLocale = "C.UTF-8";
+  # Console
+  console = {
+    keyMap = "us";
+  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
@@ -241,10 +239,13 @@
     libcap go gcc ffmpeg-full
     cinnamon.nemo shutter xscreensaver #rogauracore
     rofi
+
     # All with wine
     wineWowPackages.stable
+
+    # Custom builds
     (callPackage /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/buildrog/default.nix { })
-  ]; # kube3d kubectl
+]; # kube3d kubectl
 
   environment.localBinInPath = true;
 
@@ -301,7 +302,7 @@
     '';
     shellAliases = {
       emacs = "emacs -nw";
-      light = "sudo rogauracore brightness 3";
+      #light = "sudo rogauracore brightness 3";
       ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";
       customrebuild = "sudo nixos-rebuild -I nixpkgs=/home/truebad0ur/nixpkgs switch";
