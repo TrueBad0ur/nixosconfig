@@ -11,4 +11,4 @@
  ;; If there is more than one, they won't work right.
  )
 
-(setq make-backup-files nil) ; stop creating ~ files
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup")))
