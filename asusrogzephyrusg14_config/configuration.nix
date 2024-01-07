@@ -302,7 +302,7 @@
     '';
     shellAliases = {
       emacs = "emacs -nw";
-      #light = "sudo rogauracore brightness 3";
+      rog = "sudo rogauracore brightness 3";
       ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";
       customrebuild = "sudo nixos-rebuild -I nixpkgs=/home/truebad0ur/nixpkgs switch";
@@ -334,7 +334,9 @@
     bindings = [
       { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 10"; }
       { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 10"; }
-      
+      #{ keys = [ 248 ]; events = [ "key" ]; command = "su - truebad0ur -c 'export XDG_RUNTIME_DIR=/run/user/1000; pactl set-source-mute @DEFAULT_SOURCE@ toggle'"; }
+      #{ keys = [ 248 ]; events = [ "key" ]; command = "XDG_RUNTIME_DIR=/run/user/1000 pactl set-source-mute @DEFAULT_SOURCE@ toggle"; }
+      #{ keys = [ 248 ]; events = [ "key" ]; command = "echo 4 >> /tmp/keycode"; }
       #{ keys = [ 229 ]; events = [ "key" ]; command = "sudo /home/truebad0ur/.nix-profile/bin/rogauracore brightness 1"; }
       #{ keys = [ 230 ]; events = [ "key" ]; command = "sudo /home/truebad0ur/.nix-profile/bin/rogauracore brightness 3"; }
       #{ keys = [ 229 ]; events = [ "key" ]; command = "echo 1 > /tmp/229"; }

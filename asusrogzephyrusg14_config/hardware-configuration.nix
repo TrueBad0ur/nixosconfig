@@ -39,10 +39,12 @@
 
   # sound
 
-  hardware.pulseaudio.enable = true;
-  hardware.pulseaudio.support32Bit = true;
-
-  hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  hardware.pulseaudio = {
+    enable = true;
+    support32Bit = true;
+    extraConfig = "load-module module-combine-sink";
+    #systemWide = true;
+  };
 
   #environment.systemPackages = with pkgs; [
   #  libusb1
