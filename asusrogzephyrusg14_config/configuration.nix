@@ -240,7 +240,7 @@
     go zsh oh-my-zsh alacritty
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
-    vlc
+    vlc bluez bluetuith
     libcap go gcc ffmpeg-full
     cinnamon.nemo shutter xscreensaver #rogauracore
     rofi
@@ -266,7 +266,9 @@
   #};
 
   # ----------------------- #
-  
+
+  services.blueman.enable = true;
+
   environment.localBinInPath = true;
 
   #services.kubernetes = {

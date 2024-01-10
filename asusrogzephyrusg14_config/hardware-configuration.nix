@@ -46,6 +46,10 @@
     #systemWide = true;
   };
 
+  hardware.bluetooth.enable = true;
+  #hardware.bluetooth.package = pkgs.bluetuith;
+  #hardware.bluetooth.powerOnBoot = true;
+
   #environment.systemPackages = with pkgs; [
   #  libusb1
   #];
