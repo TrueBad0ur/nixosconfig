@@ -26,9 +26,9 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
-    #wireless.enable = false;
-    wireless.iwd.enable = true;
-    networkmanager.wifi.backend = "iwd";
+    wireless.enable = false;
+    #wireless.iwd.enable = true;
+    #networkmanager.wifi.backend = "iwd";
     extraHosts =
       ''
         127.0.0.1 test.local
@@ -38,9 +38,11 @@
   };
 
   environment.etc = {
-    "resolv.conf".text = "nameserver 104.248.36.8\n";
+    # Work
+    "resolv.conf".text = "options rotate\noptions timeout:1\nnameserver 10.177.128.198\nnameserver 104.248.36.8\n";
+    # Home
+    # "resolv.conf".text = "nameserver 104.248.36.8\n";
   };
-  
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -231,22 +233,40 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    #(python3.withPackages(ps: with ps; [ pulsectl ]))
+    #libpulseaudio
     # All tools
-    emacs wget curl musikcube unzip dig vscode neofetch
+    emacs wget curl musikcube unzip dig vscode neofetch #python3
     go zsh oh-my-zsh alacritty
     docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
     minikube kubectl kubernetes-helm terraform wireguard-tools jq
+    vlc
     libcap go gcc ffmpeg-full
     cinnamon.nemo shutter xscreensaver #rogauracore
     rofi
-
+    networkmanager-openconnect networkmanagerapplet
+    # kube3d kubectl
     # All with wine
     wineWowPackages.stable
 
     # Custom builds
     (callPackage /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/buildrog/default.nix { })
-]; # kube3d kubectl
 
+    # ----------------------- #
+
+    # Additional work packages
+    thunderbird appimage-run #mattermost
+];
+
+  # Additional work configs
+  #services.mattermost = {
+  #  enable = true;
+  #  siteUrl = "";
+  #  statePath = "/tmp/mattermost";
+  #};
+
+  # ----------------------- #
+  
   environment.localBinInPath = true;
 
   #services.kubernetes = {
@@ -313,6 +333,7 @@
       list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
       vpnstart = "wg-quick up ~/.config/andrey.conf";
       vpnstop = "wg-quick down ~/.config/andrey.conf";
+      #mattermost = "appimage-run /home/truebad0ur/binaries/mattermost-desktop-5.6.0-linux-x86_64.AppImage";
     };
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
