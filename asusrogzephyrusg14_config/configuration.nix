@@ -10,6 +10,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./work.nix
       #./tuigreet.nix
       #./trackpoint.nix
       #./i3status.nix
@@ -37,12 +38,10 @@
     # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   };
 
-  environment.etc = {
-    # Work
-    "resolv.conf".text = "options rotate\noptions timeout:1\nnameserver 10.177.128.198\nnameserver 104.248.36.8\n";
-    # Home
-    # "resolv.conf".text = "nameserver 104.248.36.8\n";
-  };
+  #environment.etc = {
+  #  # Home
+  #  # "resolv.conf".text = "nameserver 104.248.36.8\n";
+  #};
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -251,21 +250,7 @@
 
     # Custom builds
     (callPackage /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/buildrog/default.nix { })
-
-    # ----------------------- #
-
-    # Additional work packages
-    thunderbird appimage-run #mattermost
 ];
-
-  # Additional work configs
-  #services.mattermost = {
-  #  enable = true;
-  #  siteUrl = "";
-  #  statePath = "/tmp/mattermost";
-  #};
-
-  # ----------------------- #
 
   services.blueman.enable = true;
 
