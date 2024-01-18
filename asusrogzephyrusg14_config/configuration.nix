@@ -309,6 +309,7 @@
     '';
     shellAliases = {
       emacs = "emacs -nw";
+      display = "xrandr --output HDMI-1-1 --left-of eDP-2 --auto";
       rog = "sudo rogauracore brightness 3";
       ls = "ls --color";
       rebuild = "sudo nixos-rebuild switch";
