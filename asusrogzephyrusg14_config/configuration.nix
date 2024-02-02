@@ -59,11 +59,11 @@
       filezilla
       vlc bluez bluetuith
       libcap go gcc ffmpeg-full
-      cinnamon.nemo shutter xscreensaver #rogauracore
+      cinnamon.nemo shutter xscreensaver
       rofi
       networkmanager-openconnect networkmanagerapplet
       # kube3d kubectl
-      virtualbox libvirt
+      virtualbox libvirt vmware-workstation
       # All with wine
       wineWowPackages.stable
 
@@ -226,21 +226,40 @@
   virtualisation = {
     docker.enable = true;
     virtualbox.host.enable = true;
-  };
+    vmware.host.enable = true;
+    vmware.guest.enable = true;
+};
 
   #### systemd.services ####
 
-  systemd.services.xscreensaverstart = {
-    enable = true;
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "3";
+  systemd.services = {
+    xscreensaverstart = {
+      enable = true;
+      serviceConfig = {
+        Restart = "on-failure";
+        RestartSec = 3;
+      };
+      path = with pkgs; [ xscreensaver sudo ];
+      script = ''
+        sudo -H -u truebad0ur xscreensaver --nosplash
+      '';
+      wantedBy = [ "multi-user.target" ];
     };
-    path = with pkgs; [ xscreensaver sudo ];
-    script = ''
-      sudo -H -u truebad0ur xscreensaver --nosplash
-    '';
-    wantedBy = [ "multi-user.target" ]; # starts after login
+
+    rogauracore = {
+      # in systemd it fails, because rog return other value than zero
+      enable = true;
+      startLimitIntervalSec = 5;
+      startLimitBurst = 3;
+      serviceConfig = {
+        Restart = "on-failure";
+        RestartSec = 1;
+      };
+      script = ''
+        /run/current-system/sw/bin/rogauracore brightness 3
+      '';
+      wantedBy = [ "multi-user.target" ];
+    };
   };
 
   #### configs for users ####
