@@ -15,12 +15,13 @@
       };
       grub = {
         enable = true;
-	version = 2;
+	
         efiSupport = true;
         efiInstallAsRemovable = true;
         device = "nodev";
 	extraEntriesBeforeNixOS = true;
-	extraEntries = ''
+        splashImage = ./grub.png;
+        extraEntries = ''
           menuentry "Reboot" {
             reboot
           }
