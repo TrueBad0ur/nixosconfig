@@ -19,16 +19,16 @@
         efiSupport = true;
         efiInstallAsRemovable = true;
         device = "nodev";
-	extraEntriesBeforeNixOS = true;
+	#extraEntriesBeforeNixOS = true;
         splashImage = ./grub.png;
-        extraEntries = ''
-          menuentry "Reboot" {
-            reboot
-          }
-          menuentry "Poweroff" {
-            halt
-          }
-        '';
+        #extraEntries = ''
+        #  menuentry "Reboot" {
+        #    reboot
+        #  }
+        #  menuentry "Poweroff" {
+        #    halt
+        #  }
+        #'';
       };
     };
   
