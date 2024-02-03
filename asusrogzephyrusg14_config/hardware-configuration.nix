@@ -6,10 +6,42 @@
     ];
 
   #### Boot ####
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    loader = {
+      systemd-boot.enable = false;
+      efi = {
+        #canTouchEfiVariables = false;
+        efiSysMountPoint = "/boot";
+      };
+      grub = {
+        enable = true;
+	
+        efiSupport = true;
+        efiInstallAsRemovable = true;
+        device = "nodev";
+	extraEntriesBeforeNixOS = true;
+        splashImage = ./grub.png;
+        extraEntries = ''
+          menuentry "Reboot" {
+            reboot
+          }
+          menuentry "Poweroff" {
+            halt
+          }
+        '';
+      };
+    };
+  
+
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+      kernelModules = [ ];
+    };
+
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/ac30a256-d5a9-40e4-adbe-97f62801cd91";
