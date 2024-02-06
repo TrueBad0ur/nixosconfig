@@ -46,6 +46,7 @@
       #(python3.withPackages(ps: with ps; [ pulsectl ]))
       #libpulseaudio
       # All tools
+      nerdfonts
       emacs wget curl musikcube unzip dig vscode neofetch #python3
       go zsh oh-my-zsh alacritty
       docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
@@ -78,7 +79,8 @@
       exportConfiguration = true;
       layout = "us,ru";
       xkbOptions = "grp:caps_switch";
-      
+      #xkbOptions = "grp:toggle";
+
       enable = true;
       desktopManager.xterm.enable = false;
       
@@ -94,7 +96,12 @@
         lightdm = {
           enable = true;
           greeters = {
-            tiny.enable = true;
+	    gtk.enable = false;
+            tiny = {
+	      enable = true;
+	      #label.user = "ユーザー名";
+              #label.pass = "パスワード";
+	    };
           };
         };
       };
@@ -205,16 +212,55 @@
     keyMap = "us";
   };
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
+  #### Localization ###
+
+  i18n = {
+    defaultLocale = "ja_JP.UTF-8";
+
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_US.UTF-8";
+      LC_IDENTIFICATION = "ja_JP.UTF-8";
+      LC_MEASUREMENT = "en_US.UTF-8";
+      LC_MONETARY = "en_US.UTF-8";
+      LC_MESSAGES = "ja_JP.UTF-8"; 
+      LC_NAME = "ja_JP.UTF-8";
+      LC_NUMERIC = "ja_JP.UTF-8";
+      LC_PAPER = "en_US.UTF-8";
+      LC_TELEPHONE = "en_US.UTF-8";
+      LC_TIME = "ja_JP.UTF-8";
+    };
+  };
+
+  #### Font ####
+
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-extra
+      noto-fonts-emoji
+      #liberation_ttf
+      fira-code
+      fira-code-symbols
+      #mplus-outline-fonts
+      dina-font
+      proggyfonts
+
+      dejavu_fonts
+    ];
+
+    fontconfig = {
+      enable = true;
+
+      defaultFonts = {
+        sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
+        serif = [ "Noto Serif JP" "DejaVu Serif" ];
+      };
+
+      subpixel = {
+        lcdfilter = "light";
+      };
+    };
   };
 
   #### Virtualisation ####
