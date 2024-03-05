@@ -49,7 +49,8 @@
       nerdfonts
       emacs wget curl musikcube unzip dig vscode neofetch #python3
       go zsh oh-my-zsh alacritty
-      firefox-devedition-unwrapped
+      firefox
+      #firefox-devedition-unwrapped
       docker git tdesktop htop tmux file feh xclip
       minikube kubectl kubernetes-helm terraform wireguard-tools jq
       iptables v2ray v2raya
@@ -140,6 +141,7 @@
   };
 
   programs = {
+    firejail.enable = false;
     light.enable = true;
     steam.enable = true;
     # rofi config
