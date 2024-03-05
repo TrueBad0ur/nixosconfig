@@ -49,7 +49,8 @@
       nerdfonts
       emacs wget curl musikcube unzip dig vscode neofetch #python3
       go zsh oh-my-zsh alacritty
-      docker firefox-devedition-unwrapped git tdesktop htop tmux file feh xclip
+      firefox-devedition-unwrapped
+      docker git tdesktop htop tmux file feh xclip
       minikube kubectl kubernetes-helm terraform wireguard-tools jq
       iptables v2ray v2raya
       filezilla
@@ -140,7 +141,7 @@
 
   programs = {
     light.enable = true;
-
+    steam.enable = true;
     # rofi config
     # todo in home manager
     #programs.rofi = {
@@ -215,19 +216,24 @@
   #### Localization ###
 
   i18n = {
-    defaultLocale = "ja_JP.UTF-8";
-
+    #defaultLocale = "ja_JP.UTF-8";
+    defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
-      LC_IDENTIFICATION = "ja_JP.UTF-8";
+      #LC_IDENTIFICATION = "ja_JP.UTF-8";
+      LC_IDENTIFICATION = "en_US.UTF-8";
       LC_MEASUREMENT = "en_US.UTF-8";
       LC_MONETARY = "en_US.UTF-8";
-      LC_MESSAGES = "ja_JP.UTF-8"; 
-      LC_NAME = "ja_JP.UTF-8";
-      LC_NUMERIC = "ja_JP.UTF-8";
+      LC_MESSAGES = "en_US.UTF-8"; 
+      LC_NAME = "en_US.UTF-8";
+      LC_NUMERIC = "en_US.UTF-8";
+      #LC_MESSAGES = "ja_JP.UTF-8";
+      #LC_NAME = "ja_JP.UTF-8";
+      #LC_NUMERIC = "ja_JP.UTF-8";
       LC_PAPER = "en_US.UTF-8";
       LC_TELEPHONE = "en_US.UTF-8";
-      LC_TIME = "ja_JP.UTF-8";
+      #LC_TIME = "ja_JP.UTF-8";
+      LC_TIME = "en_US.UTF-8";
     };
   };
 
@@ -252,10 +258,10 @@
     fontconfig = {
       enable = true;
 
-      defaultFonts = {
-        sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
-        serif = [ "Noto Serif JP" "DejaVu Serif" ];
-      };
+      #defaultFonts = {
+      #  sansSerif = [ "Noto Sans CJK JP" "DejaVu Sans" ];
+      #  serif = [ "Noto Serif JP" "DejaVu Serif" ];
+      #};
 
       subpixel = {
         lcdfilter = "light";
@@ -316,7 +322,17 @@
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    vivaldi = {
+      proprietaryCodecs = true;
+      enableWideVine = true;
+    };
+    librewolf = {
+      ffmpegSupport = true;
+      pipewireSupport = true;
+    };
+  };
 
   system.stateVersion = "23.11";
 }
