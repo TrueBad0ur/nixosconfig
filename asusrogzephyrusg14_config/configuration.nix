@@ -10,7 +10,7 @@
       #./neofetch-configuration.nix
     ];
 
-  #nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   #### Networking ####
 
@@ -58,12 +58,16 @@
       vlc bluez bluetuith
       libcap go gcc ffmpeg-full
       cinnamon.nemo shutter xscreensaver
-      rofi
+      rofi qbittorrent
       networkmanager-openconnect networkmanagerapplet
       # kube3d kubectl
-      virtualbox libvirt vmware-workstation
+      remmina
+      #virtualbox
+      libvirt vmware-workstation
       # All with wine
       wineWowPackages.stable
+
+      rustup jetbrains.rust-rover
 
       # Custom builds
       (callPackage /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/buildrog/default.nix { })
@@ -274,9 +278,10 @@
   #### Virtualisation ####
   virtualisation = {
     docker.enable = true;
-    virtualbox.host.enable = true;
-    vmware.host.enable = true;
-    vmware.guest.enable = true;
+    #virtualbox.host.enable = true;
+    #virtualbox.guest.enable = true;
+    #vmware.host.enable = true;
+    #vmware.guest.enable = true;
 };
 
   #### systemd.services ####
@@ -318,7 +323,7 @@
     users.truebad0ur = {
       isNormalUser = true;
       description = "truebad0ur";
-      extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "audio" ]; # "vboxusers" ];
       packages = with pkgs; [];
     };
   };
