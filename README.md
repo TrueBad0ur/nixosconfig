@@ -5,3 +5,4 @@ Some info:
 * Thinkpad x200s
 * Asus rog zephyrus g14 ga402rj
 * i3
+* current macos with nix only
