@@ -63,7 +63,9 @@
       rofi
       networkmanager-openconnect networkmanagerapplet
       wineWowPackages.stable
-    ];
+
+      musikcube
+];
   };
 
   #### Programs ####
@@ -95,7 +97,7 @@
         ls = "ls --color";
         rebuild = "sudo nixos-rebuild switch";
         customrebuild = "sudo nixos-rebuild -I nixpkgs=/home/truebad0ur/nixpkgs switch";
-        copy = "sudo cp -r /etc/nixos/\* /home/truebad0ur/nixosconfig/thinkpadx200s_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/thinkpadx200s_config/";
+        copy = "sudo rm /etc/nixos/*\~ && sudo cp -r /etc/nixos/\* /home/truebad0ur/nixosconfig/thinkpadx200s_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/thinkpadx200s_config/";
         k = "kubectl";
         list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
       };
