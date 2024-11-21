@@ -21,7 +21,7 @@
   #### Networking ####
 
   networking = {
-    #enableIPv6  = false;
+    enableIPv6  = true;
     firewall.enable = false;
     hostName = "nixos-thinkpad";
     networkmanager.enable = true;
@@ -56,7 +56,7 @@
       firefox
       docker git tdesktop htop tmux file feh xclip
       kubectl kubernetes-helm terraform jq
-      iptables v2ray # v2raya - change to nekoray
+      iptables #v2ray v2raya
       vlc # bluez bluetuith
       libcap go gcc ffmpeg-full
       nemo shutter xscreensaver
@@ -65,6 +65,8 @@
       wineWowPackages.stable
 
       musikcube
+      nekoray
+      gnumake
 ];
   };
 
@@ -243,6 +245,18 @@
       '';
       wantedBy = [ "multi-user.target" ];
     };
+
+    #v2raya = {
+    #  enable = true;
+    #  description = "v2rayA gui client";
+    #  after = [ "network.target" ];
+    #  serviceConfig = {
+    #    Restart = "always";
+    #    ExecStart = "${pkgs.v2raya}/bin/v2rayA";
+    #  };
+    #  path = with pkgs; [ iptables bash ];
+    #  wantedBy = [ "multi-user.target" ];
+    #};
   };
 
   #### configs for users ####
