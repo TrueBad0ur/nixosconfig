@@ -8,10 +8,18 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "ata_generic" "uhci_hcd" "ehci_pci" "ahci" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "tp_smapi" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ tp_smapi ];
+  boot = {
+    initrd.availableKernelModules = [ "ata_generic" "uhci_hcd" "ehci_pci" "ahci" "usb_storage" "sd_mod" ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "tp_smapi" ];
+    extraModulePackages = with config.boot.kernelPackages; [ tp_smapi ];
+    loader = {
+      grub = {
+        enable = true;
+        splashImage = ./grub.png;
+      };
+    };
+  };
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/e55894a8-b588-4da6-b0e3-095d03fdd301";
