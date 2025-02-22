@@ -7,14 +7,9 @@
         content = {
           type = "gpt";
           partitions = {
-            ESP = {
-              type = "EF00";
-              size = "256M";
-              content = {
-               type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-              };
+            boot = {
+              size = "1M";
+              type = "EF02";
             };
 
             swap = {
