@@ -4,6 +4,8 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./packages.nix
+      ./modules/bundle.nix
     ];
 
   # Bootloader
@@ -83,44 +85,7 @@
   # Install firefox.
   programs.firefox.enable = false;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Global packages
-  environment.systemPackages = with pkgs; [
-    zsh
-    neofetch
-    git
-  #  vim
-  #  wget
-  ];
-
-  programs.zsh = {
-    promptInit = ''
-      neofetch
-      #[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-    '';
-    enable = true;
-    shellInit = '''';
-    shellAliases = {
-      rebuild = "sudo nixos-rebuild switch";
-      customrebuild = "sudo nixos-rebuild -I nixpkgs=/home/truebad0ur/nixpkgs switch";
-      copy = "sudo cp -r /etc/nixos/\* /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config && sudo chown -R truebad0ur:users /home/truebad0ur/nixosconfig/asusrogzephyrusg14_config/";
-      list-generations = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
-    };
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-    ohMyZsh = {
-      enable = true;
-      theme = "dieter";
-      plugins = [
-        "git"
-        "sudo"
-      ];
-    };
-  };
 
   users.defaultUserShell = pkgs.zsh;
 

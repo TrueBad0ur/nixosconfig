@@ -1,19 +1,15 @@
 {
-  description = "A simple NixOS flake";
+  description = "My NixOS flake conf";
 
   inputs = {
-    # NixOS official package source, using the nixos-24.11 branch here
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/36864ed72f234b9540da4cf7a0c49e351d30d3f1"; # nixos-24.11 22.02.2025
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    # Please replace my-nixos with your hostname
     nixosConfigurations.nixos-server = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
-        ./configuration.nix  
+        ./nixos/configuration.nix
       ];
     };
   };

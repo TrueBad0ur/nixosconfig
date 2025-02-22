@@ -9,3 +9,5 @@ nixos-generate-config --root /mnt
 mv ./configuration.nix /mnt/etc/nixos/
 
 nixos-install
+
+rebuild
