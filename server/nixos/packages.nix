@@ -7,6 +7,10 @@
     zsh
     neofetch
     git
+    dive
+    podman-tui
+    docker-compose
+    tmux
     #  vim
     #  wget
   ];
