@@ -7,6 +7,7 @@
       ./packages.nix
       ./modules/bundle.nix
       ./infra/bundle.nix
+      ./home/bundle.nix
     ];
 
   # Bootloader
@@ -57,13 +58,18 @@
   services.printing.enable = false;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+  services = {
+    pulseaudio = {
+      enable = false;
+    };
+
+    pipewire = {
+      enable = false;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -75,7 +81,6 @@
     description = "truebad0ur";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kate
     #  thunderbird
     ];
     openssh.authorizedKeys.keys = [
@@ -105,5 +110,5 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

@@ -2,7 +2,9 @@
   description = "My NixOS flake conf";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/36864ed72f234b9540da4cf7a0c49e351d30d3f1"; # nixos-24.11 22.02.2025
+    nixpkgs.url = "github:NixOS/nixpkgs/ff06bd3398fb1bea6c937039ece7e7c8aa396ebf"; # nixos-25.05 05.12.2025
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
@@ -10,6 +12,7 @@
       system = "x86_64-linux";
       modules = [
         ./nixos/configuration.nix
+        inputs.home-manager.nixosModules.home-manager
       ];
     };
   };

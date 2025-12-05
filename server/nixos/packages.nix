@@ -11,7 +11,8 @@
     podman-tui
     docker-compose
     tmux
-    #  vim
-    #  wget
+    htop
+    #attic-server
+    #attic-client
   ];
 }
