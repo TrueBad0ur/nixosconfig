@@ -2,8 +2,8 @@
   description = "My NixOS flake conf";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/ff06bd3398fb1bea6c937039ece7e7c8aa396ebf"; # nixos-25.05 05.12.2025
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/871b9fd269ff6246794583ce4ee1031e1da71895"; # nixos-25.11 13.12.2025
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 

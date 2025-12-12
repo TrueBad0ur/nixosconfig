@@ -38,7 +38,6 @@
   # UI
   services.xserver.enable = false;
   services.displayManager.sddm.enable = false;
-  services.xserver.desktopManager.plasma5.enable = false;
 
   # SSH
   services.openssh = {
@@ -66,9 +65,9 @@
 
     pipewire = {
       enable = false;
-      alsa.enable = true;
+      alsa.enable = false;
       alsa.support32Bit = true;
-      pulse.enable = true;
+      pulse.enable = false;
     };
   };
 
@@ -110,5 +109,5 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
