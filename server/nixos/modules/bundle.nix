@@ -1,5 +1,5 @@
 {
   imports = [
-    ./zsh.nix
+    ./containers.nix
   ];
 }

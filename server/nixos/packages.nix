@@ -5,7 +5,7 @@
 
   environment.systemPackages = with pkgs; [
     zsh
-    neofetch
+    fastfetch
     git
     dive
     podman-tui
