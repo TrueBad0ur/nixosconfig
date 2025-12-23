@@ -10,9 +10,10 @@
     dive
     podman-tui
     docker-compose
-    tmux
+    #tmux
     htop
     #attic-server
     #attic-client
+    glow
   ];
 }
