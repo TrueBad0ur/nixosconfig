@@ -13,6 +13,7 @@
         enable = true;
         extraConfig = ''
           set number relativenumber
+	  set clipboard=unnamedplus
         '';
         defaultEditor = true;
       };
