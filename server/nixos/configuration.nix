@@ -11,14 +11,19 @@
     ];
 
   # Bootloader
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda";
+    useOSProber = true;
+  };
 
   # Network
-  networking.hostName = "nixos-server";
-  networking.wireless.enable = false;
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "nixos-server";
+    wireless.enable = false;
+    networkmanager.enable = true;
+    firewall.enable = false;
+  };
 
   # Locals
   time.timeZone = "Europe/Moscow";
@@ -53,10 +58,10 @@
     };
   };
 
-  # Enable CUPS to print documents.
+  # Disable CUPS to print documents
   services.printing.enable = false;
 
-  # Enable sound with pipewire.
+  # Disable sound with pipewire
   security.rtkit.enable = true;
   services = {
     pulseaudio = {
@@ -71,9 +76,6 @@
     };
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # User
   users.users.truebad0ur = {
     isNormalUser = true;
@@ -87,7 +89,9 @@
     ];
   };
 
-  # Install firefox.
+  users.defaultUserShell = pkgs.zsh;
+
+  # Disable defaults
   programs = {
     firefox.enable = false;
     nano.enable = false;
@@ -95,22 +99,5 @@
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  users.defaultUserShell = pkgs.zsh;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-
   system.stateVersion = "25.11";
 }
