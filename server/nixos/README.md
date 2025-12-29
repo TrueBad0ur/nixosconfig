@@ -60,3 +60,41 @@ sudo nixos-rebuild switch --flake /etc/nixos
 
 ## Commands
 
+# Delete
+```
+d
+dw
+de
+dd
+```
+
+# Reverse
+```
+ctrl + r
+```
+# Undo
+```
+u
+```
+
+# Find
+```
+/
+n / N - next / previous
+```
+
+# Subst
+```
+:s/one/two/
+:s/one/two/g
+:#,#s/one/two/g - from line # to line #
+:#,#s/one/two/g
+```
+
+# File movement
+```
+G - move to the bottom of the file
+gg - move to the start of the file
+number + G - move to line number
+% near parenth foes to its match
+```
