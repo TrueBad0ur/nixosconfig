@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, mcp-simple-server, ... }:
 let
   # Fetch the MCP repository from GitHub
   mcpSrc = pkgs.fetchFromGitHub {
@@ -6,14 +6,17 @@ let
     repo = "mcp-simple-server";
     rev = "main";
     #hash = lib.fakeHash;
-    hash = "sha256-IOvjqflOuKPCd3ig2RdkKhu4IcXEkeNecr6SjKu8ZvQ=";
+    hash = "sha256-kwZCwJn+9cnfPEoCg1csVrvtrpdAiaeztP4fiynF26c=";
   };
+
+  #mcpSrc = mcp-simple-server;
 
   # Create Python environment with required packages
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [
     fastapi
     uvicorn
     mcp
+    pytz
   ]);
 
   # Build the MCP server Docker image

@@ -15,5 +15,6 @@
     #attic-server
     #attic-client
     glow
+    nix-prefetch-github
   ];
 }
