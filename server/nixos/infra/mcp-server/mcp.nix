@@ -1,17 +1,12 @@
-{ config, pkgs, lib, mcp-simple-server, ... }:
+{ config, pkgs, lib, ... }:
 let
-  # Fetch the MCP repository from GitHub
   mcpSrc = pkgs.fetchFromGitHub {
     owner = "TrueBad0ur";
     repo = "mcp-simple-server";
     rev = "main";
-    #hash = lib.fakeHash;
     hash = "sha256-kwZCwJn+9cnfPEoCg1csVrvtrpdAiaeztP4fiynF26c=";
   };
 
-  #mcpSrc = mcp-simple-server;
-
-  # Create Python environment with required packages
   pythonEnv = pkgs.python3.withPackages (ps: with ps; [
     fastapi
     uvicorn
@@ -19,69 +14,109 @@ let
     pytz
   ]);
 
-  # Build the MCP server Docker image
-  # - Later redo witout docker
-  mcpImage = pkgs.dockerTools.buildImage {
+  mcp-server = pkgs.stdenv.mkDerivation {
     name = "mcp-server";
-    tag = "latest";
+    src = mcpSrc;
 
-    # Use copyToRoot instead of deprecated contents
-    copyToRoot = pkgs.buildEnv {
-      name = "mcp-server-root";
-      paths = [ pythonEnv mcpSrc ];
-      pathsToLink = [ "/bin" "/" ];
-    };
+    buildInputs = [ pythonEnv ];
 
-    # Set working directory and command
-    config = {
-      WorkingDir = "/app";
-      Cmd = [ "python" "server.py" ];
-      ExposedPorts = {
-        "8000/tcp" = {};
-      };
-    };
+    installPhase = ''
+      mkdir -p $out
+      cp app/*.py $out/
+      chmod +x $out/server.py
+    '';
   };
+
+  mcpUser = "mcp-server";
+  mcpGroup = "mcp-server";
 in
 {
-
-  # Load the image during system activation
-  config.system.activationScripts.load-mcp-image = ''
-    echo "Setting up MCP server..."
-
-    # Create log directory
-    mkdir -p /var/log/mcp-server
-    chown 1000:1000 /var/log/mcp-server 2>/dev/null || true
-
-    # Load and tag image
-    echo "Checking MCP server image..."
-    if ${pkgs.podman}/bin/podman image exists localhost/mcp-server:latest 2>/dev/null; then
-      echo "MCP server image already exists"
-    else
-      echo "Loading MCP server image..."
-      if ${pkgs.podman}/bin/podman load < ${mcpImage}; then
-        echo "Tagging image as localhost/mcp-server:latest..."
-        ${pkgs.podman}/bin/podman tag mcp-server:latest localhost/mcp-server:latest
-        echo "MCP server image loaded and tagged successfully"
-      else
-        echo "Failed to load MCP server image"
-        exit 1
-      fi
-    fi
-  '';
-
-  # OCI container using the loaded image
-  config.virtualisation.oci-containers.containers = {
-    local-mcp-server = {
-      image = "localhost/mcp-server:latest";
-      ports = ["0.0.0.0:8000:8000"];
-      volumes = [
-        "/var/log/mcp-server:/app/logs"
-      ];
-      environment = {
-        MCP_API_KEY = "your-secure-api-key-here";
-      };
-      autoStart = true;
-    };
+  config.users.users.${mcpUser} = {
+    isSystemUser = true;
+    group = mcpGroup;
+    description = "MCP Server user";
+    home = "/var/lib/mcp-server";
+    createHome = false;
   };
-}
 
+  config.users.groups.${mcpGroup} = {};
+
+  config.systemd.services.mcp-server = {
+    description = "MCP Server Service";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      User = mcpUser;
+      Group = mcpGroup;
+
+      StateDirectory = "mcp-server";
+      StateDirectoryMode = "0750";
+
+      LogsDirectory = "mcp-server";
+      LogsDirectoryMode = "0750";
+
+      WorkingDirectory = "/var/lib/mcp-server";
+
+      Environment = [
+        "PATH=${pythonEnv}/bin:${pkgs.coreutils}/bin"
+        "MCP_API_KEY=your-secure-api-key-here"
+        "PYTHONPATH=${mcp-server}"
+      ];
+
+      ExecStart = "${pythonEnv}/bin/python ${mcp-server}/server.py";
+
+      Restart = "always";
+      RestartSec = 3;
+
+      NoNewPrivileges = true;
+      PrivateTmp = true;
+      PrivateDevices = true;
+      ProtectHome = true;
+      ProtectSystem = "strict";
+      ProtectKernelTunables = true;
+      ProtectKernelModules = true;
+      ProtectControlGroups = true;
+      RestrictSUIDSGID = true;
+      RestrictNamespaces = true;
+      LockPersonality = true;
+      RestrictRealtime = true;
+      MemoryDenyWriteExecute = true;
+      InaccessiblePaths = [
+        "/home"
+        "/root"
+        "/etc/shadow"
+	"/etc/passwd"
+      ];
+
+      SystemCallFilter = [
+        "@system-service"
+        "~@privileged"
+        "~@resources"
+      ];
+
+      UMask = "0077";  # Files created with 600 permissions
+      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];  # Only network access
+
+      BindReadOnlyPaths = [
+        "/nix/store"
+      ];
+
+      LimitNOFILE = 1024;
+      LimitNPROC = 64;
+
+      CPUQuota = "50%";  # Limit to 50% of one CPU core
+
+      StandardOutput = "journal";
+      StandardError = "journal";
+    };
+
+    postStart = ''
+      # Create symlink for logs directory after directories are created
+      ln -sf /var/log/mcp-server /var/lib/mcp-server/logs
+    '';
+  };
+
+  config.networking.firewall.allowedTCPPorts = [ 8000 ];
+}
