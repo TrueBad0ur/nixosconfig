@@ -22,7 +22,7 @@
       # nix.package = pkgs.nix;
 
       # Allow building via linux
-      nix.linux-builder.enable = true;
+      nix.linux-builder.enable = false;
 
       # Enable sudo via fingerprint
       security.pam.enableSudoTouchIdAuth = true;
@@ -46,7 +46,7 @@
       nix.settings.experimental-features = "nix-command flakes";
 
       # Create /etc/zshrc that loads the nix-darwin environment.
-      programs.zsh.enable = true;  # default shell on catalina
+      #programs.zsh.enable = true;  # default shell on catalina
       # programs.fish.enable = true;
 
       # Set Git commit hash for darwin-version.
